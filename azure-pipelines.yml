@@ -26,16 +26,22 @@ steps:
     g++ -std=c++11 -I/usr/include/boost/asio -I/usr/include/boost -o binary.out  main.cpp connection.cpp connection_manager.cpp mime_types.cpp reply.cpp request_handler.cpp request_parser.cpp server.cpp -lboost_system -lboost_thread -lpthread
   displayName: 'compiling'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: 'readme.txt,binary.out'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    PathtoPublish: '$(build.artifactstagingdirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'drop'
     itemPattern: 'readme.txt'
-    downloadPath: '$(System.ArtifactsDirectory)'
+downloadPath: '$(System.ArtifactsDirectory)'
