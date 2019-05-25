@@ -1,18 +1,19 @@
 trigger:
-
 - master
 
 pool:
   vmImage: 'ubuntu-16.04'
 
+
 steps:
 - script: |
     sudo apt-get update
     sudo apt-get install  gcc build-essential libboost-all-dev
+    echo $VersionVariable
   displayName: 'installing dependenices'
 
 - script: |
-    g++ -std=c++11 -I/usr/include/boost/asio -I/usr/include/boost -o binary.out main.cpp connection.cpp connection_manager.cpp mime_types.cpp reply.cpp request_handler.cpp request_parser.cpp server.cpp -lboost_system -lboost_thread -lpthread
+    g++ -std=c++11 -I/usr/include/boost/asio -I/usr/include/boost -o binary.out  main.cpp connection.cpp connection_manager.cpp mime_types.cpp reply.cpp request_handler.cpp request_parser.cpp server.cpp -lboost_system -lboost_thread -lpthread
   displayName: 'compiling'
 
 - task: PublishBuildArtifacts@1
@@ -20,10 +21,10 @@ steps:
     PathtoPublish: '$(System.DefaultWorkingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'drop'
+    itemPattern: '*.out'
     downloadPath: '$(System.ArtifactsDirectory)'
