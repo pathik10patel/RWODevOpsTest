@@ -28,13 +28,14 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: 'readme.txt'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+    contents: |
+      readme.txt
+      binary.out
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
@@ -43,5 +44,5 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'drop'
-    itemPattern: 'readme.txt'
+    itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)'
