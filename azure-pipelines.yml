@@ -44,4 +44,4 @@ steps:
     downloadType: 'single'
     artifactName: 'drop'
     itemPattern: 'readme.txt'
-downloadPath: '$(System.ArtifactsDirectory)'
+    downloadPath: '$(System.ArtifactsDirectory)'
