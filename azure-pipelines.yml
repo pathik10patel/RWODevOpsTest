@@ -2,6 +2,11 @@ trigger:
 
 - master
 
+variables:
+  build_number: $(Build.BuildNumber)
+  build_number_final: ID.$(Build.BuildNumber).$(Build.SourceVersion)
+
+
 pool:
   vmImage: 'ubuntu-16.04'
 
@@ -12,7 +17,7 @@ steps:
     sudo apt-get install  gcc build-essential libboost-all-dev
     echo $(Build.BuildNumber)
     echo $(Build.SourceVersion)
-
+    echo $(build_number)
   displayName: 'installing dependenices'
 
 - script: |
