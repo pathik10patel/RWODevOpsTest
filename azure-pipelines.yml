@@ -18,6 +18,7 @@ steps:
     echo $(Build.BuildNumber)
     echo $(Build.SourceVersion)
     echo $(build_number)
+    rm -rf readme.txt
     echo $(build_number_final) >> readme.txt
   displayName: 'installing dependenices'
 
